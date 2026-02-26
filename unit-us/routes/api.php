@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\EmployeeController;
 
 use App\Http\Controllers\RegistrationController;
 use Illuminate\Http\Request;
@@ -29,6 +30,18 @@ Route::prefix('{slug}')
                 return response()->json($request->user());
             });
 
-            
+            // --- HR ADMIN ROUTES ---
+            Route::middleware('can:manage-employees')->group(function () {
+                // Employee Management
+                Route::get('/admin/employees', [EmployeeController::class, 'index']);
+                Route::post('/admin/employees', [EmployeeController::class, 'store']);
+                Route::get('/admin/employees/{id}', [EmployeeController::class, 'show'])->where('id', '[0-9]+');
+                Route::put('/admin/employees/{id}', [EmployeeController::class, 'update'])->where('id', '[0-9]+');
+                Route::delete('/admin/employees/{id}', [EmployeeController::class, 'destroy'])->where('id', '[0-9]+');
+
+                
+            });
+
+         
         });
     });

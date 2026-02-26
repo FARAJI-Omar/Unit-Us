@@ -3,7 +3,9 @@
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\EmployeeEventController;
+use App\Http\Controllers\EmployeeRewardController;
 use App\Http\Controllers\EventController;
+use App\Http\Controllers\LeaderboardController;
 use App\Http\Controllers\PointController;
 use App\Http\Controllers\RegistrationController;
 use App\Http\Controllers\RewardController;
@@ -69,6 +71,14 @@ Route::prefix('{slug}')
             Route::post('/events/{eventId}/register', [EmployeeEventController::class, 'register']);
             Route::get('/events/myevents', [EmployeeEventController::class, 'myEvents']);
 
-            
+            // Rewards
+            Route::get('/rewards', [EmployeeRewardController::class, 'index']);
+            Route::post('/rewards/{rewardId}/purchase', [EmployeeRewardController::class, 'purchase']);
+
+            // Points history
+            Route::get('/pointshistory', [EmployeeRewardController::class, 'history']);
+
+            // Leaderboard
+            Route::get('/leaderboard', [LeaderboardController::class, 'index']);
         });
     });
